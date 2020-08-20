@@ -12,19 +12,19 @@ Primeiramente vamos criar um circuito comum.
 
 Circuito terá dois qubits, e será um estado emaranhado.
 
-from qiskit import *
+`from qiskit import *`
 
-from qiskit.visualization import plot_histogram
+`from qiskit.visualization import plot_histogram`
 
-circuit = QuantumCircuit(2,2)
+`circuit = QuantumCircuit(2,2)`
 
-circuit.h(0)
+`circuit.h(0)`
 
-circuit.cx(0,1)
+`circuit.cx(0,1)`
 
-circuit.measure(qr,cr)
+`circuit.measure(qr,cr)`
 
-print(circuit)
+`print(circuit)`
 
 Note que é utilizada uma porta Hadamard no qubit 0, e um X controlado de 0 para 1, chegando ao estado
 
@@ -32,11 +32,11 @@ Note que é utilizada uma porta Hadamard no qubit 0, e um X controlado de 0 para
 
 #Vamos rodar num simulador de computador quântico. Qasm vem de “quantum assembly simulator”.
 
-simulator = Aer.get_backend('qasm_simulator')
+`simulator = Aer.get_backend('qasm_simulator')`
 
-results = execute(circuit,simulator).result().get_counts()
+`results = execute(circuit,simulator).result().get_counts()`
 
-plot_histogram(results)
+`plot_histogram(results)`
 
 Num simulador clássico, dá o seguinte resultado: 50% de chance de chegar em |00> e 50% de chance de chegar em |11>.
 
@@ -52,31 +52,31 @@ Ao obter a conta, você ganha um número de registro, para identificação quand
 
 Para salvar a conta no computador, o comando a seguir:
 
-IBMQ.save_account('APIKEY', overwrite=True)
+`IBMQ.save_account('APIKEY', overwrite=True)`
 
 O código a seguir carrega a conta, especifica qual o computador que queremos utilizar e manda rodar.
 
-IBMQ.load_account()
+`IBMQ.load_account()`
 
-provider = IBMQ.get_provider(hub = 'ibm-q')
+`provider = IBMQ.get_provider(hub = 'ibm-q')`
 
-device = provider.get_backend('ibmq_16_melbourne')
+`device = provider.get_backend('ibmq_16_melbourne')`
 
-job = execute(circuit,backend = device,shots = 1024)
+`job = execute(circuit,backend = device,shots = 1024)`
 
-print(job.job_id())
+`print(job.job_id())`
 
 Há uma série de comandos para monitoramento do job no computador. Ele pode ficar em fila por um tempo. Depois do computador rodar ele dá o resultado e retorna para o nosso processo.
 
 No caso, foi rodado 1024 vezes. Nós temos sempre que rodar isso mais uma vez por conta de efeito de erro – ainda não há correção de erros.
 
-from qiskit.tools.monitor import job_monitor
+`from qiskit.tools.monitor import job_monitor`
 
-job_monitor(job)
+`job_monitor(job)`
 
-device_result = job.result()
+`device_result = job.result()`
 
-plot_histogram(device_result.get_counts(circuit))
+`plot_histogram(device_result.get_counts(circuit))`
 
 Display: o job está em sexto na fila:
 
