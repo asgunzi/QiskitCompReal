@@ -1,16 +1,15 @@
 # QiskitCompReal
-Rodar o qiskit num computador quântico real
+Running a real quantum computer — an easy introduction
 
+IBM offers some quantum computers to be run via the cloud.
 
-Rodando um computador quântico real
+Let’s run an example, using the Qiskit language.
 
-A IBM disponibiliza alguns computadores quânticos para serem rodados, via cloud.
+First, you’ll have to install Qiskit (https://qiskit.org/).
 
-Vamos rodar um exemplo, utilizando a linguagem Qiskit.
+Let’s create a common circuit.
 
-Primeiramente vamos criar um circuito comum.
-
-Circuito terá dois qubits, e será um estado emaranhado.
+This circuit will have two qubits.
 
 `from qiskit import *`
 
@@ -26,11 +25,11 @@ Circuito terá dois qubits, e será um estado emaranhado.
 
 `print(circuit)`
 
-Note que é utilizada uma porta Hadamard no qubit 0, e um X controlado de 0 para 1, chegando ao estado
+Note that a Hadamard port is used in qubit 0, and a controlled-X from 0 to 1. The final state is
 
 ![](https://informacaoquantica.files.wordpress.com/2020/08/entangledstate.png)
 
-#Vamos rodar num simulador de computador quântico. Qasm vem de “quantum assembly simulator”.
+#Let’s run on a quantum computer simulator. Qasm comes from “quantum assembly simulator”.
 
 `simulator = Aer.get_backend('qasm_simulator')`
 
@@ -38,23 +37,23 @@ Note que é utilizada uma porta Hadamard no qubit 0, e um X controlado de 0 para
 
 `plot_histogram(results)`
 
-Num simulador clássico, dá o seguinte resultado: 50% de chance de chegar em |00> e 50% de chance de chegar em |11>.
+In a simulator, it gives the following result: 50% chance of arriving at |00> and 50% chance of arriving at |11>.
 
 ![](https://informacaoquantica.files.wordpress.com/2020/08/result01.png?w=403)
 
-Agora, vamos rodar no computador real.
+Now, let’s run on the real computer.
 
-A IBM disponibiliza o acesso a um computador real via cloud. Primeiro temos que abrir uma conta na IBM, na página a seguir.
+IBM provides access to a real computer. We’ll have to open an account with IBM, on the next page.
 
 https://quantum-computing.ibm.com/login
 
-Ao obter a conta, você ganha um número de registro, para identificação quando acessar a plataforma.
+When you get the account, you get a registration number, for identification when accessing the platform.
 
-Para salvar a conta no computador, o comando a seguir:
+To save the account on the computer, use the following command:
 
 `IBMQ.save_account('APIKEY', overwrite=True)`
 
-O código a seguir carrega a conta, especifica qual o computador que queremos utilizar e manda rodar.
+The following code loads the account, specifies which computer we want to use and run it.
 
 `IBMQ.load_account()`
 
@@ -66,9 +65,9 @@ O código a seguir carrega a conta, especifica qual o computador que queremos ut
 
 `print(job.job_id())`
 
-Há uma série de comandos para monitoramento do job no computador. Ele pode ficar em fila por um tempo. Depois do computador rodar ele dá o resultado e retorna para o nosso processo.
+There are a number of commands for monitoring the job on the computer. He can stand in line for a while. After the computer runs it gives the result and returns to our process.
 
-No caso, foi rodado 1024 vezes. Nós temos sempre que rodar isso mais uma vez por conta de efeito de erro – ainda não há correção de erros.
+In this case, it was shot 1024 times. We always have to run this more than once because of the effect of errors — there is no error correction yet.
 
 `from qiskit.tools.monitor import job_monitor`
 
@@ -78,33 +77,38 @@ No caso, foi rodado 1024 vezes. Nós temos sempre que rodar isso mais uma vez po
 
 `plot_histogram(device_result.get_counts(circuit))`
 
-Display: o job está em sexto na fila:
+Display: the job is sixth in the queue:
 
 ![](https://informacaoquantica.files.wordpress.com/2020/08/display01.png)
 
 
-Após rodar:
+After running:
 
 ![](https://informacaoquantica.files.wordpress.com/2020/08/display02.png)
 
-O resultado:
+The result is:
 
 ![](https://informacaoquantica.files.wordpress.com/2020/08/result02.png)
 
-Valores como |01> e |10> são completamente errados, o que mostra o efeito de vários erros que ainda ocorrem computadores quânticos.
+Values like |01> and |10> are completely wrong, which shows the effect of several errors that still occur in quantum computers.
 
-Para verificar os backends disponíveis: providers.backends()
+The name of computer we used isibmq_16_melbourne.There are other choices.
+
+To check the available backends: providers.backends ()
 
 
-Cada máquina tem sua especificação particular: número de qubits, arquitetura, comportamento quanto a erros, etc…
+![](https://informacaoquantica.files.wordpress.com/2020/08/display03.png)
 
-Portanto, este tutorial mostrou um computador quântico de verdade em ação.
 
-Estamos ainda no jardim da infância desta tecnologia. Vamos continuar acompanhando a sua evolução.
+Each machine has its particular specification: number of qubits, architecture, behavior regarding errors, ...
 
-Vide:
+This tutorial showed a real quantum computer in action.
 
-https://informacaoquantica.wordpress.com/roadmap-computacao-quantica/
+We are still in the kindergarten of this technology. We will continue to follow its evolution.
 
-A natureza probabilística, Heisenberg e o Eterno Retorno:
-https://ideiasesquecidas.com/2020/08/16/a-natureza-probabilistica-heisenberg-e-o-eterno-retorno/
+
+
+See also:
+https://medium.com/@arnaldogunzi/running-a-real-quantum-computer-an-easy-introduction-3ce903c887d4
+
+https://medium.com/@arnaldogunzi/roadmap-quantum-computing-1fc1966513f
